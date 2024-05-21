@@ -11,22 +11,24 @@ use Illuminate\Database\Eloquent\Model;
 #### php artisan migrate:refresh --path=/database/migrations/2024_03_16_102807_create_leave_application.php
 
 Route::get('/', function () {
-    return view('webpages.dashboard');
+    //return view('webpages.dashboard');
+    return redirect('/login');
 });
 
-
-Route::get('/agent-information', function () {
-    return view('webpages.agentInfo.agentinfo');
-});
 
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
+
     Route::get('admin', function () {
         return view('webpages.dashboard');
     });
+
+    ## Agent Info
+    Route::get('/agent-information', function () {
+        return view('webpages.agentInfo.agentinfo');
+    });
     
 });
-
 
 
 Route::group(['middleware' => ['auth', 'checkPermission:create']], function () {
